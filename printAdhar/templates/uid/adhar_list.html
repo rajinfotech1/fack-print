@@ -1,0 +1,77 @@
+{% extends "layout.html" %}
+{% block content %}
+    
+<div class="container  p-2">
+    <div class="card mt-3">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            Adhar Details
+        </div>
+        <div class="card-body">
+            <table class="table">
+            <thead>
+                <tr>
+                  <th scope="col">Sr No.</th>
+                  <th scope="col">Adhar No</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Image</th>
+                  <th scope="col">Father Name</th>
+                  <th scope="col">Address</th>
+                  <th scope="col">City</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for element in data %}
+                    <tr>
+                        <th scope="row">{{forloop.counter}}</th>
+                        <td>
+                            {{element.uid}}
+                        
+                        </td>
+                        <td>{{element.full_name_hi}}</td>
+                        <td>
+                            {% if element.image.url %}
+                                <img src="{{element.image.url}}" alt = "{{element.id}}" height="40">
+                            {% endif %}
+                        </td>
+                        <td>{{element.relation_name}}</td>
+                        <td>{{element.address}}</td>
+                        <td>{{element.city}}</td>
+                        <td>
+                            <a href="{% url 'update_adhar' element.id %}" class="text-dark m"><i class="far fa-edit"></i></a>
+                            <a href="{% url 'view_adhar' element.id %}" class="text-dark m-2"><button type="button" class="btn btn-primary">PRINT</button></a>
+                            <button type="button" style="border: none;outline: none;background: none;color: darkslategrey;"  data-bs-toggle="modal" data-bs-target="#exampleModal-{{element.id}}">
+                                <i class="fas fa-trash"  data-toggle="tooltip" title="Delete"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <!-- Modal -->
+                        <div class="modal fade sm" id="exampleModal-{{element.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Delete Adhar Details</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                Are you sure, you want to delete {{element.full_name}}!
+                                </div>
+                                <div class="modal-footer">
+                                <form action="{% url 'delete_adhar' element.id %}" method="POST">
+                                    {% csrf_token %}
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Delete</button>
+                                </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                  </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

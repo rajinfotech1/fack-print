@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% load widget_tweaks %}
+{% block content %}
+
+<div class="container card" style="">
+    <h1 class="fs-2 fw-bolder mt-2">Adhar Detail Update Form</h1>
+    <div class="card-body">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+                <!-- {{ form }} -->
+                {% for field in form %}
+                <div class="col-6">
+                    <div class="form-group mb-4">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {% render_field field class="form-control" %}
+                        {% for error in field.errors %}
+                        <span class="help-block text-danger form-error">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div align="center">
+                <button class="btn btn-primary mt-2" type="submit">Update</button>
+                <a href="{% url 'adhar_list' %}"><button class="btn btn-secondary mt-2" type="button">Cancel</button></a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+{% endblock content %}
