@@ -1,0 +1,43 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        function generateBarCode(text)
+        {
+            var url = 'https://api.qrserver.com/v1/create-qr-code/?data=' + text + '&amp;size=50x50';
+            $('#barcode').attr('src', url);
+        }
+    </script>
+
+</head>
+<body onload="generateBarCode('uid:{{uid}}, name:{{data.full_name}} {{data.relation}} {{data.relation_name}}, date of birth:{{data.date_of_birth|date:'d/m/Y'}}, gender: {{data.gender}}, address:{{data.address}}, {{data.city}}, {{data.state}}- {{data.pin_code}}')" >
+
+    <div class="container1">
+        <img src="{% static 'img/uid.png' %}" alt="Snow" style="width:100%;">
+        <div class="imgp"><img src="{{data.image.url}}" alt="img" style="width:60px; hieght:65px;"></div>
+        <div class="name-h">{{data.full_name_hi}}</div>
+        <div class="name-e">{{data.full_name}}</div>
+        <div class="a-l">{{uid}}</div>
+        <div class="a-r">{{uid}}</div>
+        <div class="dob">जन्म तिथि/ DOB: {{data.date_of_birth|date:'d/m/Y'}}</div>
+        <div class="gen">{{data.gender_hi}}/ {{data.gender}}</div>
+        <div class="a-h"><b>पता:</b><br/>{{data.relation_hi}}: {{data.relation_name_hi}}, {{data.address_hi}}, {{data.city_hi}}, {{data.state_hi}} - {{data.pin_code}}</div>
+        <div class="a-e"><b>Address:</b><br/>{{data.relation}}: {{data.relation_name}}, {{data.address}}, {{data.city}}, {{data.state}} - {{data.pin_code}}</div>
+        <div class="b-c">
+            <img id='barcode' 
+            src="#" 
+            alt=""  
+            width="70" 
+            height="70"
+            onload="window.print();" />
+        </div>
+    </div>
+    
+</body>
+</html> 

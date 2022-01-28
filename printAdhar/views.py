@@ -1,5 +1,3 @@
-from pydoc import text
-from xml.dom.minidom import Attr
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import AdharCardDetail
 from .forms import AdharDetailForm, AdharDetailFirstForm
@@ -71,13 +69,15 @@ def adhar_list(request):
     return render(request, 'uid/adhar_list.html', {'data': adhar_list})
 
 
-def view_adhar(request, id):
+def print_adhar(request, id):
     
     try:
         data = AdharCardDetail.objects.get(id=id)
 
         adhar_number = ""
         uid=str(data.uid)
+
+        # this loop return the uid no in format which is in int uid no 
         for i in range(0,14):
             if i < 4:
                 adhar_number += uid[i]
@@ -90,8 +90,9 @@ def view_adhar(request, id):
             else:
                 adhar_number.append("")
 
-        return render(request, 'uid/adhar_view.html', {'data': data, 'uid': adhar_number})
-    except AdharCardDetail .DoesNotExist:
+        return render(request, 'uid/print_adhar.html', {'data': data, 'uid': adhar_number})
+        
+    except AdharCardDetail.DoesNotExist:
         return render(request, 'uid/adhar_view.html', {'data': None})
 
 
@@ -99,6 +100,7 @@ def update_adhar(request, id):
     
     instance = get_object_or_404(AdharCardDetail, id=id)
     form = AdharDetailForm(request.POST or None, request.FILES or None, instance=instance)
+
     if request.method == "POST":
         if form.is_valid():
             form.save()
@@ -114,7 +116,7 @@ def delete_adhar(request, id):
         data = AdharCardDetail.objects.get(id=id)
         data.delete()
         return redirect('adhar_list')
-    except AdharCardDetail .DoesNotExist:
+    except AdharCardDetail.DoesNotExist:
         print("Unable to delete")
         return redirect('adhar_list')
 

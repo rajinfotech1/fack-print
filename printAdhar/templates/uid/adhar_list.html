@@ -1,14 +1,14 @@
 {% extends "layout.html" %}
 {% block content %}
     
-<div class="container  p-2">
+<div class="table-responsive p-2" style="overflow:auto">
     <div class="card mt-3">
-        <div class="card-header">
+        <div class="card-header table-responsive">
             <i class="fas fa-table me-1"></i>
             Adhar Details
         </div>
-        <div class="card-body">
-            <table class="table">
+        <div class="table-responsive">
+            <table class="table table-responsive" style="width:100%;">
             <thead>
                 <tr>
                   <th scope="col">Sr No.</th>
@@ -46,6 +46,7 @@
                             </button>
                         </td>
                     </tr>
+
                     <!-- Modal -->
                         <div class="modal fade sm" id="exampleModal-{{element.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
@@ -67,6 +68,7 @@
                                 </div>
                             </div>
                         </div>
+
                     {% endfor %}
                   </tbody>
             </table>
