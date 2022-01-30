@@ -1,7 +1,11 @@
+from functools import reduce
+import string
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import AdharCardDetail
 from .forms import AdharDetailForm, AdharDetailFirstForm
 from googletrans import Translator
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
 
 # Create your views here.
 
@@ -34,9 +38,9 @@ def adhar_form(request):
         if request.POST.get('relation') == "S/O":
             form.instance.relation_hi = translate_to_hindi("atmaj")
         elif form.instance.relation == "W/O":
-            form.instance.relation_hi = translate_to_hindi("pati")
+            form.instance.relation_hi = translate_to_hindi("ardhangani")
         else:
-            form.instance.relation_hi = translate_to_hindi("putri")
+            form.instance.relation_hi = translate_to_hindi("aatmja")
 
 
         if request.POST.get('gender') == "MALE":
@@ -90,7 +94,22 @@ def print_adhar(request, id):
             else:
                 adhar_number.append("")
 
-        return render(request, 'uid/print_adhar.html', {'data': data, 'uid': adhar_number})
+        download_date = datetime.now()
+        issue_date = datetime.now() - relativedelta(years=3, days=8)
+        string = str(data.uid) + " " + data.full_name + " " + data.relation + " " + data.relation_name + " " + str(data.date_of_birth) + " " + data.gender + " " + data.address + " " + data.city + " " + data.state + " " +data.full_name_hi + " " + data.relation_hi + " " + data.relation_name_hi + " " + data.gender_hi + " " + data.address_hi + " " + data.city_hi + " " + data.state_hi + " " + str(data.pin_code) + " " + str(data.image)
+        string += " " + str(download_date) + str(issue_date)
+        string += ", This is fack Adhar Download From Fack site 'Raj Infotech Printing Service' for any frod this site will not responsible"
+        qr_text = reduce(lambda x, y: str(x)+str(y), map(ord,string))
+        
+        context = {
+            'data': data, 
+            'uid': adhar_number, 
+            'qr_text': qr_text,
+            'download_date': download_date,
+            'issue_date': issue_date
+        }
+
+        return render(request, 'uid/print_adhar.html', context)
         
     except AdharCardDetail.DoesNotExist:
         return render(request, 'uid/adhar_view.html', {'data': None})

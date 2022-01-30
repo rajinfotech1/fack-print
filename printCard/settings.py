@@ -38,8 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'printAdhar',
     'widget_tweaks',
+    'printAdhar',
+    'userApp',
 ]
 
 MIDDLEWARE = [

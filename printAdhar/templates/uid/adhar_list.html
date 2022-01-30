@@ -39,8 +39,8 @@
                         <td>{{element.address}}</td>
                         <td>{{element.city}}</td>
                         <td>
-                            <a href="{% url 'update_adhar' element.id %}" class="text-dark m"><i class="far fa-edit"></i></a>
-                            <a href="{% url 'view_adhar' element.id %}" class="text-dark m-2"><button type="button" class="btn btn-primary">PRINT</button></a>
+                            <a href="{% url 'update_adhar' element.id %}" title="edit" class="text-dark m"><i class="far fa-edit"></i></a>
+                            <a href="{% url 'view_adhar' element.id %}" title="print" target="blank" class="text-dark m-2"><i class="fas fa-print"></i></a>
                             <button type="button" style="border: none;outline: none;background: none;color: darkslategrey;"  data-bs-toggle="modal" data-bs-target="#exampleModal-{{element.id}}">
                                 <i class="fas fa-trash"  data-toggle="tooltip" title="Delete"></i>
                             </button>
@@ -56,7 +56,7 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                Are you sure, you want to delete {{element.full_name}}!
+                                Are you sure, you want to delete <b>{{element.full_name}}</b>!
                                 </div>
                                 <div class="modal-footer">
                                 <form action="{% url 'delete_adhar' element.id %}" method="POST">
