@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% load widget_tweaks %}
+{% block content %}
+
+<!--Register--> 
+<div class="container py-5">
+	<h1 class="text-center">Register</h1>
+	<form method="POST">
+		{% csrf_token %}
+		<div class="row">
+            <!-- {{ form }} -->
+            {% for field in form.visible_fields %}
+            <div class="">
+                <div class="form-group mb-4">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {% render_field field class="form-control" %}
+                    {% for error in field.errors %}
+                    <span class="help-block text-danger form-error">{{ error }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div align="center">
+            <button class="btn btn-primary mt-2" type="submit">Submit</button>
+            <a href="{% url 'adhar_list' %}"><button class="btn btn-secondary mt-2" type="button">Cancel</button></a>
+        </div>
+	</form>
+    
+    
+
+	<p class="text-center">If you already have an account, <a href="{% url 'userApp:login' %}">login</a> instead.</p>
+</div>
+
+{% endblock %}

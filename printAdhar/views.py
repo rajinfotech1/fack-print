@@ -1,5 +1,5 @@
 from functools import reduce
-import string
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import AdharCardDetail
 from .forms import AdharDetailForm, AdharDetailFirstForm
@@ -7,7 +7,6 @@ from googletrans import Translator
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
-# Create your views here.
 
 
 def index(request):
@@ -15,7 +14,7 @@ def index(request):
     data = '''Rajendra Kumar, chitarwai kala, khutar, singrauli, madhya pradesh
     contact: 9009112115
     '''
-    return render(request, 'dasboard.html', {'data': "", 't':translate_to_hindi(data)})
+    return render(request, 'dasboard.html', {'data': translate_to_hindi(data)})
     
 
 def translate_to_hindi(text):
@@ -26,6 +25,7 @@ def translate_to_hindi(text):
         return None
 
 
+@login_required
 def adhar_form(request):
 
     if request.method == "POST":
@@ -67,12 +67,14 @@ def adhar_form(request):
         return render(request, 'uid/adhar_form.html', {'form': form})
 
 
+@login_required
 def adhar_list(request):
     
     adhar_list = AdharCardDetail.objects.all() 
     return render(request, 'uid/adhar_list.html', {'data': adhar_list})
 
 
+@login_required
 def print_adhar(request, id):
     
     try:
@@ -115,6 +117,7 @@ def print_adhar(request, id):
         return render(request, 'uid/adhar_view.html', {'data': None})
 
 
+@login_required
 def update_adhar(request, id):
     
     instance = get_object_or_404(AdharCardDetail, id=id)
@@ -129,6 +132,7 @@ def update_adhar(request, id):
     return render(request, "uid/adhar_updtae_form.html", {"form": form})
 
 
+@login_required
 def delete_adhar(request, id):
     
     try:

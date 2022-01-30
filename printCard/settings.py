@@ -71,6 +71,9 @@ TEMPLATES = [
     },
 ]
 
+LOGIN_URL = 'userApp:login'
+LOGOUT_URL = 'userApp:logout'
+
 WSGI_APPLICATION = 'printCard.wsgi.application'
 
 
