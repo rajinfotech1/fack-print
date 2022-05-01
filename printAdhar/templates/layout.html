@@ -65,6 +65,11 @@
                 </nav>
                 <!-- Page content-->
                 <div class="container-fluid">
+                    <div class="news mx-5">
+                        <marquee class="news-content" scrollamount="12" onMouseOver="this.stop()" onMouseOut="this.start()">
+                            <div class="alert alert-danger" role="alert">यह पूरी तरह से फेक और मैनुअल कार्ड बनाने का एक तारीका है, जिसका जिम्मेदार न तो एडमिन है और ना ही सरकार | किसी भी धोखाधड़ी की जिम्मेदारी कार्ड बनाने वाले की होगी ...</div>
+                        </marquee>
+                    </div>
                     {% block content %}{% endblock content %}
                 </div>
             </div>
